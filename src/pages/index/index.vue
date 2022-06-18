@@ -1,5 +1,5 @@
 <template>
-  <view class="index1">
+  <view class="index">
     <text>{{ msg }}</text>
   </view>
 </template>
@@ -10,7 +10,7 @@ import './index.scss'
 
 export default {
   setup() {
-    const msg = ref('Hello world')
+    const msg = ref('Hello world .')
     return {
       msg,
     }
