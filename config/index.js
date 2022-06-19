@@ -1,3 +1,5 @@
+const path = require('path')
+
 const config = {
   projectName: 'taro-cloud-music',
   date: '2022-6-18',
@@ -7,9 +9,12 @@ const config = {
     750: 1,
     828: 1.81 / 2,
   },
+  alias: {
+    '@': path.resolve(__dirname, '..', 'src'),
+  },
   sourceRoot: 'src',
   outputRoot: 'dist',
-  plugins: [],
+  plugins: ['taro-plugin-pinia'],
   defineConstants: {},
   copy: {
     patterns: [],

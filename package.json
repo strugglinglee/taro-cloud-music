@@ -43,6 +43,8 @@
     "@tarojs/plugin-framework-vue3": "3.4.12",
     "@tarojs/runtime": "3.4.12",
     "@tarojs/taro": "3.4.12",
+    "pinia": "^2.0.14",
+    "taro-plugin-pinia": "^1.0.0",
     "vue": "^3.0.0"
   },
   "devDependencies": {

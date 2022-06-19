@@ -4,16 +4,15 @@
   </view>
 </template>
 
-<script>
-import { ref } from 'vue'
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useSystem } from '@/stores'
 import './index.scss'
 
-export default {
-  setup() {
-    const msg = ref('Hello world .')
-    return {
-      msg,
-    }
-  },
-}
+const msg = ref('Hello world .')
+
+onMounted(() => {
+  const sys = useSystem()
+  console.log(sys.options, 'sys')
+})
 </script>
