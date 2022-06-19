@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "./",
   "projectname": "taro-cloud-music",
-  "appid": "testAppId",
+  "appid": "wxad9c0695343b3c86",
   "setting": {
     "es6": false,
     "minified": false

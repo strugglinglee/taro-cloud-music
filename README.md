@@ -40,7 +40,7 @@ taro + vue3 + pinia + ts
 使用 `npx` 可以不用全局先安装 cli 工具，直接下载最新 Taro3 工程
 
 ```shell
-npx @tarojs/cli init WechatAppDemo
+npx @tarojs/cli init taro-cloud-music
 ```
 
 ### 本地安装 cli 确保项目基本运行
@@ -115,4 +115,39 @@ npx husky add .husky/commit-msg 'npx --no -- commitlint --edit "$1"'
 
 ## 状态管理-pinia
 
+> Pinia 最初是为了探索 Vuex 的下一次迭代会是什么样子，结合了 Vuex 5 核心团队讨论中的许多想法。最终， Pinia 已经实现了Vuex 5 中想要的大部分内容，并决定实现它 取而代之的是新的建议。
+> 与 Vuex 相比，Pinia 提供了一个更简单的 API，具有更少的规范，提供了 Composition-API 风格的 API，最重要的是，在与 TypeScript 一起使用时具有可靠的类型推断支持。
+
+一个 Store （如 Pinia）是一个实体，它持有未绑定到您的组件树的状态和业务逻辑。换句话说，它托管全局状态。它有点像一个始终存在并且每个人都可以读取和写入的组件。
+
+它有三个概念，state、getters 和 actions 并且可以安全地假设这些概念等同于组件中的“数据”、“计算”和“方法”。
+
 <https://pinia.web3doc.top/getting-started.html>
+
+### 安装
+
+```shell
+yarn add pinia
+yarn add taro-plugin-pinia
+```
+
+### 初始化stores
+
+src/stores/index.ts
+
+```ts
+import { App } from 'vue'
+import { createPinia } from 'pinia'
+export const store = createPinia()
+
+export function setupStore(app: App) {
+  app.use(store)
+}
+```
+
+### 在app.ts中全局注册Pinia
+
+```ts
+import { setupStore } from '@/stores'
+setupStore(App)
+```
