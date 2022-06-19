@@ -3,18 +3,22 @@ const path = require('path')
 const config = {
   projectName: 'taro-cloud-music',
   date: '2022-6-18',
-  designWidth: 750,
+  designWidth: 375,
   deviceRatio: {
     640: 2.34 / 2,
     750: 1,
     828: 1.81 / 2,
+    375: 2 / 1,
   },
   alias: {
     '@': path.resolve(__dirname, '..', 'src'),
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
-  plugins: ['taro-plugin-pinia'],
+  plugins: ['taro-plugin-pinia', '@tarojs/plugin-html'],
+  sass: {
+    data: `@import "@nutui/nutui-taro/dist/styles/variables.scss";`,
+  },
   defineConstants: {},
   copy: {
     patterns: [],

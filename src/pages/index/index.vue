@@ -4,7 +4,7 @@
   </view>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { useSystem } from '@/stores'
 import './index.scss'
@@ -16,7 +16,6 @@ onMounted(() => {
   const sys = useSystem()
   console.log(sys.options, 'sys')
   request({
-    type: 'get',
     url: '/dj/program',
     params: {
       rid: 336355127,

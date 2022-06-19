@@ -3,6 +3,7 @@ import './app.scss'
 
 import Taro from '@tarojs/taro'
 import { setupStore, useSystem } from '@/stores'
+import { Button, Cell, Icon } from '@nutui/nutui-taro'
 
 const App = createApp({
   // 对应 onLaunch
@@ -17,6 +18,9 @@ const App = createApp({
   // },
   // 入口组件不需要实现 render 方法，即使实现了也会被 taro 所覆盖
 })
+  .use(Button)
+  .use(Cell)
+  .use(Icon)
 
 setupStore(App)
 export default App
