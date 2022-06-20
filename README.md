@@ -175,7 +175,11 @@ config = {
       data: `@import "@nutui/nutui-taro/dist/styles/variables.scss";`,
   }
 }
-配置 nutui 375尺寸
+
+```
+
+- 配置 nutui 375尺寸
+```js
 // config/index.js
 config = {
   // ...
@@ -224,7 +228,7 @@ npm install babel-plugin-import --save-dev
 }
 ```
 
-全局注册
+- 全局注册
 ```js
 import { createApp } from "vue";
 import App from "./App.vue";
