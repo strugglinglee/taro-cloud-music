@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'taro-axios'
 import Taro from '@tarojs/taro'
 
-const apiBaseUrl = 'https://cloud-music-api-alpha.vercel.app'
+const baseURL = 'https://cloud-music-api-alpha.vercel.app'
 
 const instance = axios.create({
   // 超时时间 1 分钟
@@ -12,13 +12,13 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
-  const token = '111'
+  // const token = '111'
   config.headers = {
-    Authorization: `Bearer ${token}`,
-    token,
+    // Authorization: `Bearer ${token}`,
+    // token,
     ...config.headers,
   }
-  return config
+  return { ...config, baseURL }
 })
 
 const showToast = (title: string) => {
@@ -47,18 +47,12 @@ interface ApiResult<T> {
 // Taro.showToast 和loading 是单例 所以只有成功时候hideLoading 其他情况showToast
 export default function request<T>(options: AxiosRequestConfig = {}) {
   // console.log(apiBaseUrl, options)
-  // 自动加上域名
-  options.url = apiBaseUrl + options.url
-  Taro.showLoading({
-    title: '加载中...',
-  })
-  Taro.showNavigationBarLoading()
   return new Promise<T>((resolve, reject) => {
     instance(options)
       .then((response: AxiosResponse<ApiResult<T>>) => {
         if (response?.status === 200 && response?.data?.code === 200) {
-          resolve(response.data.result)
-          Taro.hideLoading()
+          console.log(response.data)
+          resolve(response.data)
         } else {
           throw response
         }
@@ -71,9 +65,6 @@ export default function request<T>(options: AxiosRequestConfig = {}) {
           showMessage(result?.data?.message ?? result?.message)
         }
         reject(result)
-      })
-      .finally(() => {
-        Taro.hideNavigationBarLoading()
       })
   })
 }
