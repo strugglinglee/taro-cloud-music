@@ -6,7 +6,7 @@
 
 ### 技术选型
 
-taro + vue3 + pinia + ts
+taro + vue3 + pinia + ts + NutUI
 
 ### 后端
 
