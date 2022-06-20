@@ -151,3 +151,83 @@ export function setupStore(app: App) {
 import { setupStore } from '@/stores'
 setupStore(App)
 ```
+
+
+## 引入NutUI组件库
+
+[参考此文档进行组件库的引入](https://nutui.jd.com/#/guide/starttaro)
+
+- 首先下载 @tarojs/plugin-html
+
+```shell
+yarn add @tarojs/plugin-html
+```
+
+- 在项目中配置
+
+```js
+// config/index.js
+config = {
+  // ...
+  plugins: ['@tarojs/plugin-html']
+  // 给 sass-loader 传递选项 ！！！！ 按需加载方式必须配置
+  sass: {
+      data: `@import "@nutui/nutui-taro/dist/styles/variables.scss";`,
+  }
+}
+配置 nutui 375尺寸
+// config/index.js
+config = {
+  // ...
+  designWidth: 375,
+  deviceRatio: {
+    640: 2.34 / 2,
+    750: 1,
+    828: 1.81 / 2,
+    375: 2 / 1
+  }
+}
+```
+
+- 推荐使用按需加载
+babel-plugin-import 是一款 babel 插件，它会在编译过程中将 import 语句自动转换为按需引入的方式。
+
+```shell
+npm install babel-plugin-import --save-dev
+```
+
+在 .babelrc 或 babel.config.js 中添加配置：
+
+```js
+{
+  // ...
+  plugins: [
+    [
+      "import",
+      {
+        "libraryName": "@nutui/nutui-taro",
+        "libraryDirectory": "dist/packages/_es",
+        // customName自定义兼容国际化使用
+        "customName": (name, file) => {
+          if (name == 'Locale') {
+            return '@nutui/nutui-taro/dist/packages/locale/lang';
+          } else {
+            return `@nutui/nutui-taro/dist/packages/_es/${name}`;
+          }
+        },
+        "style": (name, file) => name.toLowerCase().replace('_es/', '') + '/index.scss',
+        "camel2DashComponentName": false
+      },
+      'nutui3-taro'
+    ]
+  ]
+}
+```
+
+全局注册
+```js
+import { createApp } from "vue";
+import App from "./App.vue";
+import { Button, Cell, Icon } from "@nutui/nutui-taro";
+createApp(App).use(Button).use(Cell).use(Icon);
+```
