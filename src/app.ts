@@ -3,7 +3,7 @@ import './app.scss'
 
 import Taro from '@tarojs/taro'
 import { setupStore, useSystem } from '@/stores'
-import { Button, Cell, Icon } from '@nutui/nutui-taro'
+import { Button, Cell, Icon, Form, FormItem, CellGroup } from '@nutui/nutui-taro'
 
 const App = createApp({
   // 对应 onLaunch
@@ -21,6 +21,9 @@ const App = createApp({
   .use(Button)
   .use(Cell)
   .use(Icon)
+  .use(Form)
+  .use(FormItem)
+  .use(CellGroup)
 
 setupStore(App)
 export default App

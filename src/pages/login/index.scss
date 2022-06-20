@@ -1,13 +1,12 @@
 .login {
   padding: 30px;
-
-  input {
-    border: 1px solid #888;
-  }
 }
 
 .form-item {
   display: flex;
   align-items: center;
-  height: 80px;
+}
+
+.loginBtn {
+  margin-top: 30px;
 }
