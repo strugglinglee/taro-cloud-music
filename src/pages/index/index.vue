@@ -1,26 +1,18 @@
 <template>
-  <view class="index">
-    <text>{{ msg }}</text>
-  </view>
+  <view class="index"> </view>
+  <search></search>
+  <adSwiper></adSwiper>
+  <songs></songs>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { useSystem, useUserInfo } from '@/stores'
+import search from './components/search.vue'
+import songs from './components/songs.vue'
+import adSwiper from './components/ad-swiper.vue'
+// import { useSystem, useUserInfo } from '@/stores'
 import './index.scss'
-import request from '@/utils/request'
+// import request from '@/utils/request'
 
-const msg = ref('Hello world .')
-
-onMounted(() => {
-  const sys = useSystem()
-  const userInfo = useUserInfo()
-  console.log(sys.options, userInfo, 'sys')
-  request({
-    url: '/dj/program',
-    params: {
-      rid: 336355127,
-    },
-  })
-})
+onMounted(() => {})
 </script>
