@@ -1,4 +1,4 @@
-// import Taro from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import { defineStore } from 'pinia'
 
 const useUserInfo = defineStore({
@@ -6,8 +6,7 @@ const useUserInfo = defineStore({
   id: 'user',
   /** 状态 */
   state: () => ({
-    info: {},
-    //JSON.parse(Taro.getStorageSync('userInfo'))
+    info: JSON.parse(Taro.getStorageSync('userInfo')) || '',
   }),
   actions: {
     init() {
