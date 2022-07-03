@@ -51,7 +51,6 @@ export default function request<T>(options: AxiosRequestConfig = {}) {
     instance(options)
       .then((response: AxiosResponse<ApiResult<T>>) => {
         if (response?.status === 200 && response?.data?.code === 200) {
-          console.log(response.data)
           resolve(response.data)
         } else {
           throw response
