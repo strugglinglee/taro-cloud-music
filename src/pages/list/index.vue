@@ -1,6 +1,6 @@
 <template>
   <view class="list">
-    <view class="list-item" v-for="item in list" :key="item.id">
+    <view class="list-item" v-for="item in list" :key="item.id" @click="goToDetail(item)">
       <view class="list-item-title">{{ item.name }}</view>
       <view class="list-item-name">{{ computedSinger(item) }}</view>
     </view>
@@ -22,6 +22,13 @@ onMounted(() => {
 const computedSinger = computed(() => (item) => {
   return item.ar.map((er) => er.name).join(',')
 })
+
+const goToDetail = (item) => {
+  const currentId = item.id
+  if (!currentId) return
+  const url = `/pages/song-detail/index?id=${currentId}`
+  Taro.navigateTo({ url })
+}
 
 const getList = async (id) => {
   if (!id) return
