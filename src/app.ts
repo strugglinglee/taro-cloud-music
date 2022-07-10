@@ -14,6 +14,7 @@ import {
   SwiperItem,
   Grid,
   GridItem,
+  Navbar,
 } from '@nutui/nutui-taro'
 
 const App = createApp({
@@ -40,6 +41,7 @@ const App = createApp({
   .use(SwiperItem)
   .use(Grid)
   .use(GridItem)
+  .use(Navbar)
 
 setupStore(App)
 export default App
