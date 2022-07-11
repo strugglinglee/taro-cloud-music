@@ -2,6 +2,6 @@
 . "$(dirname "$0")/_/husky.sh"
 
 # # 检查ts
-echo "---ts检查开始---"
-npx lint-staged
-echo "---ts检查结束---"
+# echo "---ts检查开始---"
+# npx lint-staged
+# echo "---ts检查结束---"
