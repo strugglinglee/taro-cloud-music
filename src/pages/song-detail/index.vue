@@ -18,10 +18,16 @@
       loop
     ></audio>
 
-    <button type="primary" @click="audioPlay">播放</button>
-    <button type="primary" @click="audioPause">暂停</button>
-    <button type="primary" @click="audio14">设置当前播放时间为14秒</button>
-    <button type="primary" @click="audioStart">回到开头</button>
+    <view v-if="detail.lyric">
+      <view v-for="item in detail.lyric.lyric" :key="item">{{ item }} </view>
+    </view>
+
+    <view class="footer">
+      <button type="primary" @click="audioPlay">播放</button>
+      <button type="primary" @click="audioPause">暂停</button>
+      <button type="primary" @click="audio14">设置当前播放时间为14秒</button>
+      <button type="primary" @click="audioStart">回到开头</button>
+    </view>
   </view>
 </template>
 
@@ -40,6 +46,7 @@ onMounted(() => {
   if (!ids) return
   getDetail(ids)
   getSongUrl(ids)
+  getLyric(ids)
 })
 
 const back = () => {
@@ -67,7 +74,6 @@ const getDetail = async (ids) => {
       ids,
     },
   })
-  //  /lyric?id=33894312 歌词
   if (!songs.length) return
   detail.value = songs[0]
   detail.value.singer = detail.value.ar[0]?.name
@@ -75,6 +81,21 @@ const getDetail = async (ids) => {
   console.log(detail.value.picUrl)
   Taro.hideLoading()
 }
+
+const getLyric = async (id) => {
+  const {
+    lrc: { lyric },
+  } = await request({
+    url: '/lyric',
+    params: {
+      id,
+    },
+  })
+
+  detail.value.lyric = parseLyric(lyric)
+  console.log(detail.value.lyric.lyric)
+}
+
 const getSongUrl = async (id) => {
   const { data } = await request({
     url: '/song/url',
@@ -89,5 +110,47 @@ const getSongUrl = async (id) => {
     // 使用 wx.createAudioContext 获取 audio 上下文 context
     audioCtx.value = wx.createAudioContext('myAudio')
   })
+}
+
+// 解析歌词的方法
+const parseLyric = (lrc) => {
+  let lyrics = lrc.split('\n')
+  let lrcObj = {}
+  for (let i = 0; i < lyrics.length; i++) {
+    let lyric = decodeURIComponent(lyrics[i])
+    let timeReg = /\[\d*:\d*((\.|:)\d*)*\]/g
+    let timeRegExpArr = lyric.match(timeReg)
+    if (!timeRegExpArr) continue
+    let clause = lyric.replace(timeReg, '')
+    if (clause.length > 0) {
+      for (let k = 0, h = timeRegExpArr.length; k < h; k++) {
+        let t = timeRegExpArr[k]
+        let min = Number(String(t.match(/\[\d*/i)).slice(1)),
+          sec = Number(String(t.match(/:\d*/i)).slice(1))
+        let time = timeToString(min * 60 + sec)
+        lrcObj[time] = clause
+      }
+    }
+  }
+
+  return Object.entries(lrcObj).reduce(
+    (pre, [m, v]) => {
+      console.log(m, v)
+      pre.mins.push(m)
+      pre.lyric.push(v)
+      return pre
+    },
+    { mins: [], lyric: [] }
+  )
+}
+
+// 转换时间格式
+const timeToString = (duration) => {
+  var str = ''
+  var minute =
+    parseInt(duration / 60) < 10 ? '0' + parseInt(duration / 60) : parseInt(duration / 60)
+  var second = duration % 60 < 10 ? '0' + (duration % 60) : duration % 60
+  str = minute + ':' + second
+  return str
 }
 </script>
