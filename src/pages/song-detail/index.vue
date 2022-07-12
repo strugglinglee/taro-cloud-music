@@ -7,7 +7,6 @@
         <text>{{ detail.singer }}</text>
       </view>
     </view>
-
     <audio
       :poster="detail.picUrl"
       :name="detail.name"
@@ -23,10 +22,34 @@
     </view>
 
     <view class="footer">
-      <button type="primary" @click="audioPlay">播放</button>
-      <button type="primary" @click="audioPause">暂停</button>
-      <button type="primary" @click="audio14">设置当前播放时间为14秒</button>
-      <button type="primary" @click="audioStart">回到开头</button>
+      <nut-icon
+        name="next-song"
+        class="icon-song"
+        font-class-name="iconfont"
+        class-prefix="icon"
+        @click="audio14"
+      ></nut-icon>
+      <nut-icon
+        name="play"
+        class="icon-song"
+        font-class-name="iconfont"
+        class-prefix="icon"
+        @click="audioPlay"
+      ></nut-icon>
+      <nut-icon
+        name="pause"
+        class="icon-song"
+        font-class-name="iconfont"
+        class-prefix="icon"
+        @click="audioPause"
+      ></nut-icon>
+      <nut-icon
+        name="previous-song"
+        font-class-name="iconfont"
+        class-prefix="icon"
+        class="icon-song"
+        @click="audioStart"
+      ></nut-icon>
     </view>
   </view>
 </template>

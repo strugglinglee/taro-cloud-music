@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import './app.scss'
-
+//https://www.iconfont.cn/manage/index?spm=a313x.7781069.1998910419.20&manage_type=myprojects&projectId=3517513
+import './assets/font/iconfont.css'
 import Taro from '@tarojs/taro'
 import { setupStore, useSystem } from '@/stores'
 import {

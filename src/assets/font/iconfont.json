@@ -1,0 +1,254 @@
+{
+  "id": "3517513",
+  "name": "music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8341786",
+      "name": "下一首",
+      "font_class": "next-song",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "8341784",
+      "name": "上一首",
+      "font_class": "previous-song",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "8341788",
+      "name": "静音",
+      "font_class": "mute",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "8341789",
+      "name": "音量",
+      "font_class": "sound",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "8358223",
+      "name": "子菜单",
+      "font_class": "play-list",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "8358226",
+      "name": "调试",
+      "font_class": "test",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "8358231",
+      "name": "列表2",
+      "font_class": "list",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "8358883",
+      "name": "踩1",
+      "font_class": "dislike-active",
+      "unicode": "e68f",
+      "unicode_decimal": 59023
+    },
+    {
+      "icon_id": "8358884",
+      "name": "踩2",
+      "font_class": "dislike",
+      "unicode": "e690",
+      "unicode_decimal": 59024
+    },
+    {
+      "icon_id": "8358892",
+      "name": "收藏1",
+      "font_class": "shoucang",
+      "unicode": "e698",
+      "unicode_decimal": 59032
+    },
+    {
+      "icon_id": "8358893",
+      "name": "收藏2",
+      "font_class": "shoucang1",
+      "unicode": "e699",
+      "unicode_decimal": 59033
+    },
+    {
+      "icon_id": "8358894",
+      "name": "心1",
+      "font_class": "xin",
+      "unicode": "e69a",
+      "unicode_decimal": 59034
+    },
+    {
+      "icon_id": "8358895",
+      "name": "心2",
+      "font_class": "xin1",
+      "unicode": "e69b",
+      "unicode_decimal": 59035
+    },
+    {
+      "icon_id": "8358901",
+      "name": "赞1",
+      "font_class": "zan",
+      "unicode": "e6a1",
+      "unicode_decimal": 59041
+    },
+    {
+      "icon_id": "8358902",
+      "name": "赞2",
+      "font_class": "zan1",
+      "unicode": "e6a2",
+      "unicode_decimal": 59042
+    },
+    {
+      "icon_id": "2674472",
+      "name": "返回",
+      "font_class": "back",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "2674476",
+      "name": "客服",
+      "font_class": "contact",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "2674482",
+      "name": "说明",
+      "font_class": "info",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "2674483",
+      "name": "暂停",
+      "font_class": "pause",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "2674484",
+      "name": "收藏",
+      "font_class": "collect",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "2674878",
+      "name": "箭头 上",
+      "font_class": "arrow-up",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "2674928",
+      "name": "箭头 右",
+      "font_class": "arrow-right",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "2674929",
+      "name": "箭头 下",
+      "font_class": "arrow-down",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "2675007",
+      "name": "我的",
+      "font_class": "mine",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "2675009",
+      "name": "首页",
+      "font_class": "home",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "2675143",
+      "name": "浏览",
+      "font_class": "scan",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "2811143",
+      "name": "订阅",
+      "font_class": "subscribe",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "2811147",
+      "name": "会员",
+      "font_class": "vip",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "2811149",
+      "name": "评价",
+      "font_class": "appraise",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "2892819",
+      "name": "收货地址页／编辑40",
+      "font_class": "edit",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "2939196",
+      "name": "关闭26",
+      "font_class": "close",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "2939198",
+      "name": "加减组件 加号",
+      "font_class": "add",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "3170182",
+      "name": "猜你喜欢",
+      "font_class": "like",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "3170183",
+      "name": "换一换",
+      "font_class": "change",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "2674474",
+      "name": "播放",
+      "font_class": "play",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    }
+  ]
+}
