@@ -7,10 +7,10 @@ export default defineAppConfig({
     'pages/song-detail/index',
   ],
   window: {
-    backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#fff',
+    backgroundTextStyle: 'dark',
+    navigationBarBackgroundColor: '#333',
     navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black',
+    navigationBarTextStyle: 'white',
   },
   tabBar: {
     selectedColor: '#E20000',
