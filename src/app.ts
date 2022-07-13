@@ -16,6 +16,7 @@ import {
   Grid,
   GridItem,
   Navbar,
+  ConfigProvider,
 } from '@nutui/nutui-taro'
 
 const App = createApp({
@@ -43,6 +44,7 @@ const App = createApp({
   .use(Grid)
   .use(GridItem)
   .use(Navbar)
+  .use(ConfigProvider)
 
 setupStore(App)
 export default App

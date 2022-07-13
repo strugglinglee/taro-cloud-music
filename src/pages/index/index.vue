@@ -1,12 +1,14 @@
 <template>
-  <view class="index"> </view>
-  <search></search>
-  <adSwiper></adSwiper>
-  <songs></songs>
+  <nut-config-provider theme="dark">
+    <view class="index"> </view>
+    <search></search>
+    <adSwiper></adSwiper>
+    <songs></songs>
+  </nut-config-provider>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import search from './components/search.vue'
 import songs from './components/songs.vue'
 import adSwiper from './components/ad-swiper.vue'
