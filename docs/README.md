@@ -18,3 +18,12 @@
 4. 性能优化
 5. 设计模式
 6. 写作
+
+## 一些尝试
+
+1. 尝试用vercel搭建自己的图库 
+
+不为别的，只为写md文件的时候能够更方便，先在github上建立一个仓库，上传一些图片。然后再在vercel上面建立一个新项目管理此仓库，类型选择other。然后就能用vercel提供的域名来访问自己的图片了。
+
+[图床所属github仓库](https://github.com/strugglinglee/images)
+图片将会发布在文件夹下 https://images-snowy.vercel.app/music
