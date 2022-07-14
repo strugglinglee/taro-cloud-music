@@ -5,6 +5,7 @@ export default defineAppConfig({
     'pages/mine/index',
     'pages/list/index',
     'pages/song-detail/index',
+    'pages/search/index',
   ],
   window: {
     backgroundTextStyle: 'dark',
