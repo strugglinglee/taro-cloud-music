@@ -1,43 +1,49 @@
 <template>
   <view class="song-detail">
-    <view class="header">
-      <view class="icon" @click="back">&lt;</view>
+    <CustomHeader>
       <view class="title">
         <text>{{ detail.name }}</text>
         <text>{{ detail.singer }}</text>
       </view>
-    </view>
-    <view v-if="detail.lyric">
-      <view v-for="item in detail.lyric" :key="item">{{ item.text }} </view>
-    </view>
+    </CustomHeader>
+    <scroll-view :scroll-y="true" class="main" v-if="detail.lyric">
+      <view
+        v-for="(item, index) in detail.lyric"
+        :key="item"
+        :class="{ activeText: activeLyricIndex === index }"
+        >{{ item.text }}
+      </view>
+    </scroll-view>
     <view class="footer">
       <nut-icon
-        name="next-song"
-        class="icon-song"
+        name="previous-song"
         font-class-name="iconfont"
         class-prefix="icon"
-        @click="audio14"
+        class="previous-song"
+        @click="audioStart"
       ></nut-icon>
       <nut-icon
         name="play"
         class="icon-song"
+        v-if="!isPlaying"
         font-class-name="iconfont"
         class-prefix="icon"
         @click="audioPlay"
       ></nut-icon>
       <nut-icon
         name="pause"
+        v-else
         class="icon-song"
         font-class-name="iconfont"
         class-prefix="icon"
         @click="audioPause"
       ></nut-icon>
       <nut-icon
-        name="previous-song"
+        name="next-song"
+        class="next-song"
         font-class-name="iconfont"
         class-prefix="icon"
-        class="icon-song"
-        @click="audioStart"
+        @click="audio14"
       ></nut-icon>
     </view>
   </view>
@@ -45,13 +51,19 @@
 
 <script setup>
 import './index.scss'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onUnmounted } from 'vue'
 import Taro from '@tarojs/taro'
+import CustomHeader from '@/components/header.vue'
 import request from '@/utils/request'
-
+import dayjs from 'dayjs'
+const isSameOrAfter = require('dayjs/plugin/isSameOrAfter')
+dayjs.extend(isSameOrAfter)
 const detail = ref({})
+const isPlaying = ref(false)
+const activeLyricIndex = ref(0)
+let audioCtx = null
 
-const audioCtx = ref()
+const currentTime = ref('00:00')
 
 onMounted(() => {
   const ids = Taro.Current.router?.params?.id
@@ -59,21 +71,26 @@ onMounted(() => {
   dataInit(ids)
 })
 
-const back = () => {
-  Taro.navigateBack()
-}
+onUnmounted(() => {
+  audioCtx && audioCtx.destroy()
+})
 
 const audioPlay = () => {
-  audioCtx.value.play()
+  audioCtx.play()
+  isPlaying.value = true
+  setTimeout(() => {
+    console.log(audioCtx.currentTime)
+  }, 100)
 }
 const audioPause = () => {
-  audioCtx.value.pause()
+  audioCtx.pause()
+  isPlaying.value = false
 }
 const audio14 = () => {
-  audioCtx.value.seek(14)
+  audioCtx.seek(14)
 }
 const audioStart = () => {
-  audioCtx.value.seek(0)
+  audioCtx.seek(0)
 }
 
 const dataInit = async (ids) => {
@@ -109,12 +126,30 @@ const dataInit = async (ids) => {
   console.log(detail.value.lyric)
   const songUrl = data[0].url
   detail.value.songUrl = songUrl
-  // wx.nextTick(() => {
-  const audioInnerCtx = wx.createInnerAudioContext()
-  audioInnerCtx.src = songUrl
-  audioInnerCtx.loop = true
-  audioCtx.value = audioInnerCtx
+  // 创建音频上下文
+  audioCtx = wx.createInnerAudioContext()
+  audioCtx.src = songUrl
+  audioCtx.loop = true
+  audioCtx.onTimeUpdate(() => {
+    handleTimeUpdate()
+  }, 1000)
   Taro.hideLoading()
+}
+
+const handleTimeUpdate = () => {
+  const targetTime = dayjs(audioCtx.currentTime * 1000).format('mm:ss')
+  console.log(currentTime.value, targetTime)
+  if (currentTime.value !== targetTime) {
+    currentTime.value = targetTime
+    const nextLyric = detail.value.lyric[activeLyricIndex.value + 1]
+    if (!nextLyric) return
+    // HACK: 时间计算
+    const cTime = dayjs().format('YYYY/MM/DD hh:') + currentTime.value
+    const nTime = dayjs().format('YYYY/MM/DD hh:') + nextLyric.time
+    if (dayjs(cTime).isSameOrAfter(dayjs(nTime))) {
+      activeLyricIndex.value++
+    }
+  }
 }
 
 // 解析歌词的方法
