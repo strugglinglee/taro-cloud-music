@@ -7,13 +7,13 @@
   </view>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import './index.scss'
 import { onMounted, ref, computed } from 'vue'
 import Taro from '@tarojs/taro'
 import request from '@/utils/request'
 
-const list = ref<unknown[]>([])
+const list = ref([])
 
 onMounted(() => {
   getList(Taro.Current.router?.params?.id)
@@ -25,6 +25,8 @@ const computedSinger = computed(() => (item) => {
 
 const goToDetail = (item) => {
   const currentId = item.id
+  // 记录列表ids
+  Taro.setStorageSync('songs-ids', JSON.stringify(list.value.map((music) => music.id)))
   if (!currentId) return
   const url = `/pages/song-detail/index?id=${currentId}`
   Taro.navigateTo({ url })

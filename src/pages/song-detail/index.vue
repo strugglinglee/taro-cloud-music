@@ -20,7 +20,7 @@
         font-class-name="iconfont"
         class-prefix="icon"
         class="previous-song"
-        @click="audioStart"
+        @click="handlePrevious"
       ></nut-icon>
       <nut-icon
         name="play"
@@ -43,7 +43,7 @@
         class="next-song"
         font-class-name="iconfont"
         class-prefix="icon"
-        @click="audio14"
+        @click="handleNext"
       ></nut-icon>
     </view>
   </view>
@@ -55,6 +55,7 @@ import { onMounted, ref, onUnmounted } from 'vue'
 import Taro from '@tarojs/taro'
 import CustomHeader from '@/components/header.vue'
 import request from '@/utils/request'
+import { showToast } from '@/utils/utils'
 import dayjs from 'dayjs'
 const isSameOrAfter = require('dayjs/plugin/isSameOrAfter')
 dayjs.extend(isSameOrAfter)
@@ -64,11 +65,15 @@ const activeLyricIndex = ref(0)
 let audioCtx = null
 
 const currentTime = ref('00:00')
+const cacheSongIds = ref([])
+const currentId = ref('')
 
 onMounted(() => {
-  const ids = Taro.Current.router?.params?.id
-  if (!ids) return
-  dataInit(ids)
+  const id = Taro.Current.router?.params?.id
+  if (!id) return
+  currentId.value = id
+  dataInit(id)
+  cacheSongIds.value = JSON.parse(Taro.getStorageSync('songs-ids')) || []
 })
 
 onUnmounted(() => {
@@ -86,10 +91,36 @@ const audioPause = () => {
   audioCtx.pause()
   isPlaying.value = false
 }
-const audio14 = () => {
-  audioCtx.seek(14)
+const handlePrevious = () => {
+  if (!cacheSongIds.value.length) {
+    showToast('暂无上一首歌曲可以播放')
+    return
+  }
+  const index = cacheSongIds.value.findIndex((id) => id === Number(currentId.value))
+  const len = cacheSongIds.value.length
+  // 存在上一首歌曲
+  if (index !== -1 && index > 0) {
+    currentId.value = cacheSongIds.value[index - 1]
+  } else {
+    currentId.value = cacheSongIds.value[len - 1]
+  }
+  dataInit(currentId.value)
+  audioCtx.seek(0)
 }
-const audioStart = () => {
+const handleNext = () => {
+  if (!cacheSongIds.value.length) {
+    showToast('暂无下一首歌曲可以播放')
+    return
+  }
+  const index = cacheSongIds.value.findIndex((id) => id === Number(currentId.value))
+  const len = cacheSongIds.value.length
+  // 存在上一首歌曲
+  if (index !== -1 && index + 1 < len) {
+    currentId.value = cacheSongIds.value[index + 1]
+  } else {
+    currentId.value = cacheSongIds.value[0]
+  }
+  dataInit(currentId.value)
   audioCtx.seek(0)
 }
 
