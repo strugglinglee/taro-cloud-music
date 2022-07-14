@@ -15,11 +15,15 @@ page {
 }
 
 .title {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  &-sub {
+    font-size: 30rpx;
+    margin-top: 6rpx;
+  }
 }
 
 .footer {
@@ -35,7 +39,7 @@ page {
 
 .icon-song {
   font-size: 80rpx;
-  margin: 0 40rpx;
+  margin: 0 60rpx;
 }
 
 .previous-song,
