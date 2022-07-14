@@ -7,20 +7,9 @@
         <text>{{ detail.singer }}</text>
       </view>
     </view>
-    <audio
-      :poster="detail.picUrl"
-      :name="detail.name"
-      :author="detail.singer"
-      :src="detail.songUrl"
-      id="myAudio"
-      controls
-      loop
-    ></audio>
-
     <view v-if="detail.lyric">
-      <view v-for="item in detail.lyric.lyric" :key="item">{{ item }} </view>
+      <view v-for="item in detail.lyric" :key="item">{{ item.text }} </view>
     </view>
-
     <view class="footer">
       <nut-icon
         name="next-song"
@@ -67,9 +56,7 @@ const audioCtx = ref()
 onMounted(() => {
   const ids = Taro.Current.router?.params?.id
   if (!ids) return
-  getDetail(ids)
-  getSongUrl(ids)
-  getLyric(ids)
+  dataInit(ids)
 })
 
 const back = () => {
@@ -89,90 +76,75 @@ const audioStart = () => {
   audioCtx.value.seek(0)
 }
 
-const getDetail = async (ids) => {
+const dataInit = async (ids) => {
   Taro.showLoading()
-  const { songs } = await request({
-    url: '/song/detail',
-    params: {
-      ids,
+  const [
+    {
+      value: { songs },
     },
-  })
-  if (!songs.length) return
+    {
+      value: {
+        lrc: { lyric },
+      },
+    },
+    {
+      value: { data },
+    },
+  ] = await Promise.allSettled([
+    request({
+      url: `/song/detail?ids=${ids}`,
+    }),
+    request({
+      url: `/lyric?id=${ids}`,
+    }),
+    request({
+      url: `/song/url?id=${ids}`,
+    }),
+  ])
+
   detail.value = songs[0]
   detail.value.singer = detail.value.ar[0]?.name
   detail.value.picUrl = detail.value.al?.picUrl
-  console.log(detail.value.picUrl)
-  Taro.hideLoading()
-}
-
-const getLyric = async (id) => {
-  const {
-    lrc: { lyric },
-  } = await request({
-    url: '/lyric',
-    params: {
-      id,
-    },
-  })
-
   detail.value.lyric = parseLyric(lyric)
-  console.log(detail.value.lyric.lyric)
-}
-
-const getSongUrl = async (id) => {
-  const { data } = await request({
-    url: '/song/url',
-    params: {
-      id,
-    },
-  })
-  if (!data.length) return
+  console.log(detail.value.lyric)
   const songUrl = data[0].url
   detail.value.songUrl = songUrl
-  wx.nextTick(() => {
-    // 使用 wx.createAudioContext 获取 audio 上下文 context
-    audioCtx.value = wx.createAudioContext('myAudio')
-  })
+  // wx.nextTick(() => {
+  const audioInnerCtx = wx.createInnerAudioContext()
+  audioInnerCtx.src = songUrl
+  audioInnerCtx.loop = true
+  audioCtx.value = audioInnerCtx
+  Taro.hideLoading()
 }
 
 // 解析歌词的方法
 const parseLyric = (lrc) => {
-  let lyrics = lrc.split('\n')
-  let lrcObj = {}
-  for (let i = 0; i < lyrics.length; i++) {
-    let lyric = decodeURIComponent(lyrics[i])
-    let timeReg = /\[\d*:\d*((\.|:)\d*)*\]/g
-    let timeRegExpArr = lyric.match(timeReg)
-    if (!timeRegExpArr) continue
-    let clause = lyric.replace(timeReg, '')
-    if (clause.length > 0) {
-      for (let k = 0, h = timeRegExpArr.length; k < h; k++) {
-        let t = timeRegExpArr[k]
-        let min = Number(String(t.match(/\[\d*/i)).slice(1)),
-          sec = Number(String(t.match(/:\d*/i)).slice(1))
-        let time = timeToString(min * 60 + sec)
-        lrcObj[time] = clause
-      }
-    }
-  }
+  const lyrics = lrc.split('\n')
+  const lrcArr = lyrics.reduce((pre, item) => {
+    const lyric = decodeURIComponent(item)
 
-  return Object.entries(lrcObj).reduce(
-    (pre, [m, v]) => {
-      console.log(m, v)
-      pre.mins.push(m)
-      pre.lyric.push(v)
-      return pre
-    },
-    { mins: [], lyric: [] }
-  )
+    const timeReg = /\[\d*:\d*((\.|:)\d*)*\]/g
+    const timeRegExpArr = lyric.match(timeReg)
+    const clause = lyric.replace(timeReg, '')
+    // 歌词
+    const currentObj = { text: clause }
+    if (!timeRegExpArr || !timeRegExpArr.length || !currentObj.text) return pre
+    timeRegExpArr.map((t) => {
+      const min = Number(String(t.match(/\[\d*/i)).slice(1))
+      const sec = Number(String(t.match(/:\d*/i)).slice(1))
+      currentObj.time = timeToString(min * 60 + sec)
+    })
+    return [...pre, currentObj]
+  }, [])
+  return lrcArr
 }
 
 // 转换时间格式
 const timeToString = (duration) => {
-  var str = ''
-  var minute =
+  let str = ''
+  const minute =
     parseInt(duration / 60) < 10 ? '0' + parseInt(duration / 60) : parseInt(duration / 60)
-  var second = duration % 60 < 10 ? '0' + (duration % 60) : duration % 60
+  const second = duration % 60 < 10 ? '0' + (duration % 60) : duration % 60
   str = minute + ':' + second
   return str
 }
