@@ -45,6 +45,7 @@
     "@tarojs/plugin-html": "^3.4.12",
     "@tarojs/runtime": "3.4.12",
     "@tarojs/taro": "3.4.12",
+    "dayjs": "^1.11.3",
     "pinia": "^2.0.14",
     "taro-axios": "^1.1.1",
     "taro-plugin-pinia": "^1.0.0",
