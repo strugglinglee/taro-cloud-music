@@ -3,7 +3,7 @@
     <CustomHeader>
       <view class="title">
         <text>{{ detail.name }}</text>
-        <text>{{ detail.singer }}</text>
+        <text class="title-sub">{{ detail.singer }}</text>
       </view>
     </CustomHeader>
     <scroll-view :scroll-y="true" class="main" v-if="detail.lyric">
@@ -138,7 +138,6 @@ const dataInit = async (ids) => {
 
 const handleTimeUpdate = () => {
   const targetTime = dayjs(audioCtx.currentTime * 1000).format('mm:ss')
-  console.log(currentTime.value, targetTime)
   if (currentTime.value !== targetTime) {
     currentTime.value = targetTime
     const nextLyric = detail.value.lyric[activeLyricIndex.value + 1]
@@ -146,6 +145,7 @@ const handleTimeUpdate = () => {
     // HACK: 时间计算
     const cTime = dayjs().format('YYYY/MM/DD hh:') + currentTime.value
     const nTime = dayjs().format('YYYY/MM/DD hh:') + nextLyric.time
+    console.log(cTime, nTime)
     if (dayjs(cTime).isSameOrAfter(dayjs(nTime))) {
       activeLyricIndex.value++
     }
