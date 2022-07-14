@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'taro-axios'
-import Taro from '@tarojs/taro'
+import { showToast } from './utils'
 
 const baseURL = 'https://cloud-music-api-alpha.vercel.app'
 
@@ -21,13 +21,6 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
   return { ...config, baseURL }
 })
 
-const showToast = (title: string) => {
-  Taro.showToast({
-    title,
-    icon: 'none',
-    duration: 3000,
-  })
-}
 const showMessage = (title: unknown) => {
   const message = JSON.stringify(title).replace(/"/g, '')
   // TODO Request failed with status code 500 优化展示逻辑

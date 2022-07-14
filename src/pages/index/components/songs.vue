@@ -73,7 +73,6 @@ const goList = (id) => {
 .title {
   font-size: 14px;
   font-weight: 600;
-  color: #333;
   margin-bottom: 8px;
 }
 </style>
