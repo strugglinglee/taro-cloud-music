@@ -15,7 +15,10 @@ import request from '@/utils/request'
 const adList = ref<unknown[]>([])
 
 onMounted(async () => {
-  const { banners } = await request({
+  interface BannerData {
+    banners: unknown[]
+  }
+  const { banners } = await request<BannerData>({
     url: '/banner?type=2',
   })
   adList.value = banners
