@@ -1,5 +1,5 @@
 <template>
-  <ScrollxList title="推荐歌单" :list="songs" @jump="goList" />
+  <ScrollxList title="推荐mv" :list="songs" @jump="goList" />
 </template>
 
 <script lang="ts" setup>
@@ -12,14 +12,14 @@ const songs = ref<unknown[]>([])
 
 onMounted(async () => {
   const { result } = await request({
-    url: '/personalized',
+    url: '/personalized/mv',
   })
   songs.value = result
 })
 
 const goList = ({ id }) => {
   if (!id) return
-  const url = `/pages/list/index?id=${id}`
+  const url = `/pages/mv-detail/index?id=${id}`
   Taro.navigateTo({ url })
 }
 </script>

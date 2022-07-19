@@ -1,6 +1,11 @@
 <template>
   <nut-config-provider theme="dark">
-    <SearchBar :class="m.searchBar" v-model="searchValue" :placeholder="placeholder">
+    <SearchBar
+      :class="m.searchBar"
+      v-model="searchValue"
+      :placeholder="placeholder"
+      @focus="handleFocus"
+    >
       <template v-slot:leftin>
         <nut-icon size="14" name="search2" color="#333"></nut-icon>
       </template>
@@ -17,7 +22,7 @@ const searchValue = ref<string>('')
 
 const placeholder = ref<string>('请输入')
 
-const emit = defineEmits(['search'])
+const emit = defineEmits(['search', 'focus'])
 
 onMounted(async () => {
   const {
@@ -31,6 +36,9 @@ onMounted(async () => {
 
 const search = () => {
   emit('search', searchValue.value)
+}
+const handleFocus = () => {
+  emit('focus', searchValue.value)
 }
 </script>
 
