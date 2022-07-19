@@ -73,6 +73,7 @@ onMounted(() => {
   if (!id) return
   currentId.value = id
   dataInit(id)
+  if (!Taro.getStorageSync('songs-ids')) return
   cacheSongIds.value = JSON.parse(Taro.getStorageSync('songs-ids')) || []
 })
 

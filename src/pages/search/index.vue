@@ -1,6 +1,6 @@
 <template>
   <view class="search">
-    <search @search="handleSearch"></search>
+    <search @search="handleSearch" :focus="true"></search>
     <view class="list">
       <view class="list-item" v-for="item in songs" :key="item.id" @click="goToDetail(item)">
         <view class="list-item-title">{{ item.name }}</view>

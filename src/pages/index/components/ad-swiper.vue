@@ -1,6 +1,6 @@
 <template>
   <nut-swiper :pagination-visible="true" pagination-color="#426543" auto-play="3000">
-    <nut-swiper-item v-for="item in adList" :key="item.bannerId">
+    <nut-swiper-item v-for="item in adList" :key="item.bannerId" @click="handleBanner(item)">
       <img :src="item.pic" alt="" />
     </nut-swiper-item>
   </nut-swiper>
@@ -8,7 +8,13 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
+import Taro from '@tarojs/taro'
 import request from '@/utils/request'
+import { showToast } from '@/utils/utils'
+enum Banners {
+  MUSICS = 1,
+  LIST = 10,
+}
 
 // const emit = defineEmits(['search'])
 
@@ -23,6 +29,20 @@ onMounted(async () => {
   })
   adList.value = banners
 })
+
+const handleBanner = ({ targetId, targetType }) => {
+  let url = ''
+  if (targetType === Banners.MUSICS) {
+    url = `/pages/song-detail/index?id=${targetId}`
+  } else if (targetType === Banners.LIST) {
+    // url = `/pages/list/index?id=${targetId}`
+  }
+  if (!url) {
+    showToast('暂未接通')
+    return
+  }
+  Taro.navigateTo({ url })
+}
 </script>
 
 <style lang="scss">
