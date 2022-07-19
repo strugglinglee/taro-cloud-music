@@ -92,6 +92,7 @@ const handleSubmit = async () => {
     Taro.setStorageSync('cookie', res.cookie)
     Taro.setStorageSync('token', res.token)
     console.log(res.profile, res.cookies)
+    Taro.navigateBack()
   } catch (error) {
     console.log(`---login error---`, error)
   } finally {
