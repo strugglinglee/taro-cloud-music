@@ -1,4 +1,4 @@
-interface UserResult {
+export interface UserResult {
   code: number
   cookie: string
   loginType: number
@@ -7,7 +7,7 @@ interface UserResult {
   [propName: string]: unknown
 }
 
-interface Profile {
+export interface Profile {
   avatarUrl: string
   backgroundUrl: string
   nickname: string

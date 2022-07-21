@@ -35,6 +35,7 @@ import './index.scss'
 import { onMounted, reactive, ref } from 'vue'
 import Taro from '@tarojs/taro'
 import request from '@/utils/request'
+import { UserResult } from '@/types/user'
 
 const userInfo = reactive({
   mobile: '',
