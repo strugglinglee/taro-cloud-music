@@ -16,6 +16,15 @@
     width: 100vw;
     padding: 20rpx;
 
+    &-info{
+        padding-top:50rpx;
+        text-align: center;
+
+        .signature {
+            font-size: 20rpx;
+        }
+    }
+
     &-header {
         position: relative;
         @include border-card;

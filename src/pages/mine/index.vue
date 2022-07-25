@@ -1,10 +1,13 @@
 <template>
   <view class="mine">
     <view class="mine-header">
-      <image v-if="state.isLogin" class="avatar" src="" />
+      <image v-if="state.isLogin" class="avatar" :src="state.userInfo.avatarUrl" />
       <nut-icon v-else class="avatar" name="my2" color="pink"></nut-icon>
       <view class="mine-info" v-if="state.isLogin">
-        info
+        <view> {{ state.userInfo.nickname }} </view>
+        <view class="signature">
+          {{ state.userInfo.signature }}
+        </view>
       </view>
       <view class="login-btn" v-else @click="handleLogin">
         立即登录
@@ -33,15 +36,26 @@
 import { onMounted, reactive } from 'vue'
 import './index.scss'
 import Taro from '@tarojs/taro'
+import { useUserInfo } from '@/stores'
+import { Profile } from '@/types/user'
 
-const state = reactive({
+interface StateRes {
+  isLogin: boolean
+  userInfo: Profile
+}
+const state = reactive<StateRes>({
   isLogin: false,
   userInfo: {
     loveSongsNum: 0,
   },
 })
 
-onMounted(() => {})
+onMounted(() => {
+  const { info: userInfo } = useUserInfo()
+  state.userInfo = userInfo
+  state.isLogin = !!userInfo.nickname
+  console.log(state.userInfo)
+})
 
 const handleLogin = () => {
   Taro.navigateTo({

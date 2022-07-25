@@ -87,6 +87,7 @@ const handleSubmit = async () => {
       params: {
         phone: userInfo.mobile,
         password: userInfo.password,
+        realIP: '211.161.244.70',
       },
     })
     Taro.setStorageSync('userInfo', JSON.stringify(res.profile))
