@@ -1,0 +1,12 @@
+.list {
+  padding: 20rpx;
+}
+
+.list-item {
+  margin-bottom: 10rpx;
+
+  &-title {
+    font-size: 18rpx;
+    font-weight: 500;
+  }
+}

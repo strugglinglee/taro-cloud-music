@@ -15,7 +15,7 @@
       </view>
     </view>
 
-    <view class="mine-love">
+    <view class="mine-love" v-if="state.isLogin" @click="toLikeList">
       <view class="mine-love-l">
         <view class="icon">
           <nut-icon class="icon-heart" name="heart-fill" color="#fff"></nut-icon>
@@ -60,6 +60,12 @@ onMounted(() => {
 const handleLogin = () => {
   Taro.navigateTo({
     url: '/pages/login/index',
+  })
+}
+
+const toLikeList = () => {
+  Taro.navigateTo({
+    url: '/pages/like-list/index',
   })
 }
 </script>

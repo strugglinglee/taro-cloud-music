@@ -8,6 +8,7 @@ export default defineAppConfig({
     'pages/search/index',
     'pages/mv-detail/index',
     'pages/login-by-code/index',
+    'pages/like-list/index',
   ],
   window: {
     backgroundTextStyle: 'dark',

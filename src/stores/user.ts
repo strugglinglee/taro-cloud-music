@@ -6,7 +6,7 @@ const useUserInfo = defineStore({
   id: 'user',
   /** 状态 */
   state: () => ({
-    info: JSON.parse(Taro.getStorageSync('userInfo')) || '',
+    info: Taro.getStorageSync('userInfo') ? JSON.parse(Taro.getStorageSync('userInfo')) : {},
   }),
   actions: {
     init() {

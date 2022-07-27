@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'taro-axios'
 import { showToast } from './utils'
 
@@ -17,6 +18,10 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
     // Authorization: `Bearer ${token}`,
     // token,
     ...config.headers,
+  }
+  const cookie = Taro.getStorageSync('cookie')
+  if (cookie) {
+    config.headers.cookie = cookie
   }
   return { ...config, baseURL }
 })
